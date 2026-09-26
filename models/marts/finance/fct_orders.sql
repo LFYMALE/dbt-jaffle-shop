@@ -2,7 +2,7 @@ with orders as  (
     select * from {{ ref ('stg_jaffle_shop__orders' )}}
 ),
 
-payments as (
+payment as (
     select * from {{ ref ('stg_stripe__payments') }}
 ),
 
@@ -11,7 +11,7 @@ order_payments as (
         order_id,
         sum (case when payment_status = 'success' then payment_amount end) as amount
 
-    from payments
+    from payment
     group by 1
 ),
 
